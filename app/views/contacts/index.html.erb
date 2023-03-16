@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>履歴作成ツール</title>
+    
+</head>
+<body>
+    <h1>履歴作成ツール</h1>
+    <form id="contact-form">
+        ＜連絡先情報＞
+        <input type="text" id="phone" required><br>
+        ＜住所・物件名・号室＞
+        <input type="radio" id="status-confirmed" name="status" value="確認済み" required><label for="status-confirmed">確認済み</label>
+        <input type="radio" id="status-unconfirmed" name="status" value="未聴取"><label for="status-unconfirmed">未聴取</label><br>
+        ＜入電者名＞
+        <input type="text" id="callerName" required><br>
+        ＜賃借人との関係性確認＞
+        <input type="radio" id="relationship-self" name="relationship" value="本人" required><label for="relationship-self">本人</label>
+        <input type="radio" id="relationship-other" name="relationship" value="その他"><label for="relationship-other">その他</label>
+        <input type="text" id="relationshipText" style="display: none;"><br>
+        【連絡内容・要望】
+        <br>
+        <textarea id="request" rows="7" cols="50" required></textarea><br>
+        【対応案内・回答】
+        <br>
+        <textarea id="response" rows="7" cols="50" ></textarea><br>
+        ＜対応補足事項＞
+        <input type="radio" name="supplement" value="無し" checked><label>無し</label>
+        <input type="radio" name="supplement" value="有り"><label>有り</label>
+        <textarea id="supplementText" style="display: none;"rows="4" cols="50" ></textarea><br>
+        ＜案内事項＞
+        <label><input type="checkbox" name="guide" value="無し" checked /> 無し</label>
+        <label><input type="checkbox" name="guide" value="費用負担" /> 費用負担</label>
+        <label><input type="checkbox" name="guide" value="情報開示" /> 情報開示</label>
+        <label><input type="checkbox" name="guide" value="契約書優先" /> 契約書優先</label>
+        <br>
+        ＜連絡者の温度感＞
+        <label><input type="radio" name="temperature" value="普通" required /> 普通</label>
+        <label><input type="radio" name="temperature" value="少し高い" /> 少し高い</label>
+        <label><input type="radio" name="temperature" value="高い" /> 高い</label>
+        <br>
+        <br><button type="submit">出力</button>
+    </form>
+
+    <textarea id="output" rows="13" cols="80" readonly=""></textarea>
+
+    <script src="application.js"></script>
+</body>
+</html>

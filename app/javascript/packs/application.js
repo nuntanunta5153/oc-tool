@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
             guideOutput = "＜案内事項＞\n" + guideOutput;
         }
 
-        let relationshipOutput = relationship === "その他" ? `（賃借人との関係性確認：${relationship}：${relationshipText}）` : `（賃借人との関係性確認：${relationship}）`;
+        let relationshipOutput = relationship === "その他" ? `（賃借人との関係性確認：${relationshipText}）` : `（賃借人との関係性確認：${relationship}）`;
         let supplementOutput = supplement === "有り" ? `＜対応補足事項＞\n■${supplementText}\n` : "";
 
         const outputText = `＜連絡先情報＞${formattedPhoneNumber}\n（住所・物件名・号室：${status} ）（入電者名：${callerName} ）${relationshipOutput}\n------------------------\n【連絡内容・要望】\n${request}\n\n【対応案内・回答】\n${response}\n------------------------\n${supplementOutput}\n${guideOutput}\n＜連絡者の温度感＞\n■${temperature}`;
@@ -83,48 +83,49 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 // character_counter.js
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
   const inputElement = document.getElementById("input-text");
   const caseIdElement = document.getElementById("case-id");
   const destinationNumberElement = document.getElementById("destination-number");
-  const statusRadios = document.getElementsByName("status");
+  const statusRadios = document.getElementsByName("sendstatus");
   const handlerElement = document.getElementById("handler");
   const outputElement = document.getElementById("output-text");
   const counterElement = document.getElementById("counter");
   const tokyoBuildingRadios = document.getElementsByName("tokyo-building");
 
- function generateOutputText() {
-  const inputText = inputElement.value;
-  const caseId = caseIdElement.value;
-  const destinationNumber = destinationNumberElement.value.replace(/-/g, "").replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
-  const handler = handlerElement.value;
-  let status = "";
-  let tokyoBuilding = "";
+  function generateOutputText() {
+    const inputText = inputElement.value;
+    const caseId = caseIdElement.value;
+    const destinationNumber = destinationNumberElement.value
+      .replace(/-/g, "")
+      .replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
+    const handler = handlerElement.value;
+    let status = "";
+    let tokyoBuilding = "";
 
-  for (const radio of statusRadios) {
-    if (radio.checked) {
-      status = radio.value;
-      break;
+    for (const radio of statusRadios) {
+      if (radio.checked) {
+        status = radio.value;
+        break;
+      }
     }
-  }
 
-  for (const radio of tokyoBuildingRadios) {
-    if (radio.checked) {
-      tokyoBuilding = radio.value;
-      break;
+    for (const radio of tokyoBuildingRadios) {
+      if (radio.checked) {
+        tokyoBuilding = radio.value;
+        break;
+      }
     }
+
+    let tokyoBuildingInfo = "";
+    if (tokyoBuilding === "東京建物（無印）") {
+      tokyoBuildingInfo = "東京建物不動産販売 0120-000-0000";
+    } else if (tokyoBuilding === "東京建物（RM）") {
+      tokyoBuildingInfo = "東京建物不動産販売 0120-111-1111";
+    }
+
+    return `＜SMS送信予定＞\n【本文】${inputText} ${tokyoBuildingInfo} ${handler}　案件ID：${caseId}\n【送信先番号】${destinationNumber}\n【送信後ステータス】${status}\n【送信後案件担当者】${handler}`;
   }
-
-  let tokyoBuildingInfo = "";
-  if (tokyoBuilding === "東京建物（無印）") {
-    tokyoBuildingInfo = "東京建物不動産販売 0120-000-0000";
-  } else if (tokyoBuilding === "東京建物（RM）") {
-    tokyoBuildingInfo = "東京建物不動産販売 0120-111-1111";
-  }
-
-  return `＜SMS送信予定＞\n【本文】${inputText} ${tokyoBuildingInfo} ${handler}　案件ID：${caseId}\n【送信先番号】${destinationNumber}\n【送信後ステータス】${status}\n【送信後案件担当者】${handler}`;
-}
-
 
   function updateOutput() {
     const textLength = Array.from(inputElement.value).length;
@@ -149,7 +150,7 @@ document.addEventListener("DOMContentLoaded", function() {
   for (const radio of tokyoBuildingRadios) {
     radio.addEventListener("change", updateOutput);
   }
-  
+
   const copyButton = document.getElementById("copy-output");
   const resetButton = document.getElementById("reset-output");
 
@@ -167,13 +168,32 @@ document.addEventListener("DOMContentLoaded", function() {
       radio.checked = false;
     }
     for (const radio of tokyoBuildingRadios) {
-      radio.checked = false;
+           radio.checked = false;
     }
     outputElement.value = "";
     counterElement.textContent = "0 / 670";
+    
+    handlerElement.value = localStorage.getItem("savedHandler") || "";
   }
 
   copyButton.addEventListener("click", copyOutputText);
   resetButton.addEventListener("click", resetOutputText);
-  
+
+  // LocalStorage script
+  const saveButton = document.createElement("button");
+
+  // データをLocalStorageから取得して、入力フィールドに設定
+  handlerElement.value = localStorage.getItem("savedHandler") || "";
+
+  // 保存ボタンの設定
+  saveButton.textContent = "担当者情報を保存";
+  saveButton.addEventListener("click", () => {
+    localStorage.setItem("savedHandler", handlerElement.value);
+    alert("担当者情報が保存されました");
+  });
+
+  // 保存ボタンを入力フィールドの後に挿入
+  handlerElement.parentNode.insertBefore(saveButton, handlerElement.nextSibling);
 });
+
+

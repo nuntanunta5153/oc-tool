@@ -4,88 +4,101 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>履歴作成ツール</title>
-    
+    <style>
+        .container {
+            display: flex;
+        }
+
+        .left-side, .right-side {
+            width: 50%;
+            padding: 20px;
+        }
+     </style>
 </head>
 <body>
-    <h1>履歴作成ツール</h1>
-    <form id="contact-form">
-        ＜連絡先情報＞
-        <input type="text" id="phone" required><br>
-        ＜住所・物件名・号室＞
-        <input type="radio" id="status-confirmed" name="status" value="確認済み" required><label for="status-confirmed">確認済み</label>
-        <input type="radio" id="status-unconfirmed" name="status" value="未聴取"><label for="status-unconfirmed">未聴取</label><br>
-        ＜入電者名＞
-        <input type="text" id="callerName" required><br>
-        ＜賃借人との関係性確認＞
-        <input type="radio" id="relationship-self" name="relationship" value="本人" required><label for="relationship-self">本人</label>
-        <input type="radio" id="relationship-other" name="relationship" value="その他"><label for="relationship-other">その他</label>
-        <input type="text" id="relationshipText" style="display: none;"><br>
-        【連絡内容・要望】
-        <br>
-        <textarea id="request" rows="7" cols="50" required></textarea><br>
-        【対応案内・回答】
-        <br>
-        <textarea id="response" rows="7" cols="50" ></textarea><br>
-        ＜対応補足事項＞
-        <input type="radio" name="supplement" value="無し" checked><label>無し</label>
-        <input type="radio" name="supplement" value="有り"><label>有り</label>
-        <textarea id="supplementText" style="display: none;"rows="4" cols="50" ></textarea><br>
-        ＜案内事項＞
-        <label><input type="checkbox" name="guide" value="無し" /> 無し</label>
-        <label><input type="checkbox" name="guide" value="費用負担" /> 費用負担</label>
-        <label><input type="checkbox" name="guide" value="情報開示" /> 情報開示</label>
-        <label><input type="checkbox" name="guide" value="契約書優先" /> 契約書優先</label>
-        <br>
-        ＜連絡者の温度感＞
-        <label><input type="radio" name="temperature" value="普通" required /> 普通</label>
-        <label><input type="radio" name="temperature" value="少し高い" /> 少し高い</label>
-        <label><input type="radio" name="temperature" value="高い" /> 高い</label>
-        <br>
-        <br><button type="submit">出力</button>
-    </form>
-
-    <textarea id="output" rows="13" cols="80" readonly=""></textarea>
-
-    <script src="application.js"></script>
+    <div class="container">
+        <div class="left-side">
+            <h1>履歴作成ツール</h1>
+                <form id="contact-form">
+                    ＜連絡先情報＞
+                    <input type="text" id="phone" required autocomplete="off"><br>
+                    ＜住所・物件名・号室＞
+                    <input type="radio" id="status-confirmed" name="status" value="確認済み" required><label for="status-confirmed">確認済み</label>
+                    <input type="radio" id="status-unconfirmed" name="status" value="未聴取"><label for="status-unconfirmed">未聴取</label><br>
+                    ＜入電者名＞
+                    <input type="text" id="callerName" required autocomplete="off"><br>
+                    ＜賃借人との関係性確認＞
+                    <input type="radio" id="relationship-self" name="relationship" value="本人" required><label for="relationship-self">本人</label>
+                    <input type="radio" id="relationship-other" name="relationship" value="その他"><label for="relationship-other">その他</label>
+                    <input type="text" id="relationshipText" style="display: none;"><br>
+                    【連絡内容・要望】
+                    <br>
+                    <textarea id="request" rows="7" cols="50" required></textarea><br>
+                    【対応案内・回答】
+                    <br>
+                    <textarea id="response" rows="7" cols="50" ></textarea><br>
+                    ＜対応補足事項＞
+                    <input type="radio" name="supplement" value="無し" checked><label>無し</label>
+                    <input type="radio" name="supplement" value="有り"><label>有り</label>
+                    <textarea id="supplementText" style="display: none;"rows="4" cols="50" ></textarea><br>
+                    ＜案内事項＞
+                    <label><input type="checkbox" name="guide" value="無し" /> 無し</label>
+                    <label><input type="checkbox" name="guide" value="費用負担" /> 費用負担</label>
+                    <label><input type="checkbox" name="guide" value="情報開示" /> 情報開示</label>
+                    <label><input type="checkbox" name="guide" value="契約書優先" /> 契約書優先</label>
+                    <br>
+                    ＜連絡者の温度感＞
+                    <label><input type="radio" name="temperature" value="普通" required /> 普通</label>
+                    <label><input type="radio" name="temperature" value="少し高い" /> 少し高い</label>
+                    <label><input type="radio" name="temperature" value="高い" /> 高い</label>
+                    <br>
+                    <br><button type="submit">出力</button>
+                </form>
+            
+                <textarea id="output" rows="13" cols="80" readonly=""></textarea>
+        </div>
+        <script src="application.js"></script>
     
    <!-- app/views/posts/new.html.erb -->
-<div class="container">
-  <div class="text-area-wrapper">
-    <h1>新しい投稿</h1>
-    <button id="reset-output">出力テキストをリセット</button>
-    <label for="input-text">本文</label>
-    <textarea id="input-text" rows="5" cols="50" placeholder="ここにテキストを入力してください"></textarea>
-    <p><span>SMS文字数制限: </span><span id="counter">0 / 670</span></p>
-    <br>
-    <label for="tokyo-building-regular">東京建物（無印）</label>
-    <input type="radio" id="tokyo-building-regular" name="tokyo-building" value="東京建物（無印）">
-    <label for="tokyo-building-rm">東京建物（RM)</label>
-    <input type="radio" id="tokyo-building-rm" name="tokyo-building" value="東京建物（RM）">
-    <br>
-    <label for="case-id">案件ID</label>
-    <input type="text" id="case-id">
-    <br>
-    <label for="destination-number">送信先番号</label>
-    <input type="text" id="destination-number">
-    <br>
-    <label>送信後ステータス：</label>
-    <label for="status-oc">OC対応中</label>
-    <input type="radio" id="status-oc" name="status" value="OC対応中">
- 　 <label for="status-management">管理会社対応中</label>
-    <input type="radio" id="status-management" name="status" value="管理会社対応中">
-    <label for="status-oc-completed">OC完了</label>
-    <input type="radio" id="status-oc-completed" name="status" value="OC完了">
-    <label for="status-vendor">業者対応中</label>
-    <input type="radio" id="status-vendor" name="status" value="業者対応中">
-    <br>
-    <label for="handler">送信後案件担当者</label>
-    <input type="text" id="handler">
-    <br>
-    <button id="copy-output">出力テキストをコピー</button>
-    <h2>出力テキスト:</h2>
-    <textarea id="output-text" rows="10" cols="50" readonly></textarea>
-  </div>
-</div>
+        <div class="right-side">
+            <div class="container">
+              <div class="text-area-wrapper">
+                <h1>SMS送信文作成ツール</h1>
+                <button id="reset-output">出力テキストをリセット</button>
+                <label for="input-text">本文</label>
+                <textarea id="input-text" rows="5" cols="50" placeholder="ここにテキストを入力してください"></textarea>
+                <p><span>SMS文字数制限: </span><span id="counter">0 / 670</span></p>
+                <br>
+                <input type="radio" id="tokyo-building-regular" name="tokyo-building" value="東京建物（無印）">
+                <label for="tokyo-building-regular">東京建物（無印）</label>
+                <input type="radio" id="tokyo-building-rm" name="tokyo-building" value="東京建物（RM）">
+                <label for="tokyo-building-rm">東京建物（RM)</label>
+                <br>
+                <label for="case-id">案件ID</label>
+                <input type="text" id="case-id">
+                <br>
+                <label for="destination-number">送信先番号</label>
+                <input type="text" id="destination-number">
+                <br>
+                <label>送信後ステータス：</label>
+                <input type="radio" id="status-oc" name="sendstatus" value="OC対応中">
+                <label for="status-oc">OC対応中</label>
+                <input type="radio" id="status-management" name="sendstatus" value="管理会社対応中">
+                <label for="status-management">管理会社対応中</label>
+                <input type="radio" id="status-oc-completed" name="sendstatus" value="OC完了">
+                <label for="status-oc-completed">OC完了</label>
+                <input type="radio" id="status-vendor" name="sendstatus" value="業者対応中">
+                <label for="status-vendor">業者対応中</label>
+                <br>
+                <label for="handler">送信後案件担当者</label>
+                <input type="text" id="handler" autocomplete="off">
+                <br>
+                <button id="copy-output">出力テキストをコピー</button>
+                <h2>出力テキスト:</h2>
+                <textarea id="output-text" rows="10" cols="50" readonly></textarea>
+              </div>
+            </div> 
+        </div>
 
 
 

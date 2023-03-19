@@ -13,12 +13,27 @@
             width: 50%;
             padding: 20px;
         }
+        
+         #reset-form {
+      background-color: #ffcccc; /* ボタンの通常の背景色 */
+      color: #333; /* ボタンの通常のテキストカラー */
+      border: none; /* ボタンの境界線をなくす */
+      padding: 10px 20px; /* ボタンの内側の余白 */
+      border-radius: 4px; /* ボタンの角を丸める */
+    }
+    
+    #reset-form:hover {
+      background-color: #ff0000; /* ボタンのホバー時の背景色 */
+      color: #fff; /* ボタンのホバー時のテキストカラー */
+}
+
      </style>
 </head>
 <body>
     <div class="container">
         <div class="left-side">
             <h1>履歴作成ツール</h1>
+            <button id="reset-form">入力テキストをリセット</button>
                 <form id="contact-form">
                     ＜連絡先情報＞
                     <input type="text" id="phone" required autocomplete="off"><br>
@@ -64,15 +79,30 @@
             <div class="container">
               <div class="text-area-wrapper">
                 <h1>SMS送信文作成ツール</h1>
-                <button id="reset-output">出力テキストをリセット</button>
+                <label>経験：</label>
+                <input type="radio" id="newcomer" name="experience" value="新人" checked>
+                <label for="newcomer">新人</label>
+                <input type="radio" id="experienced" name="experience" value="熟練">
+                <label for="experienced">熟練</label>
+                <br>
+                 <div id="handler-wrapper">
+                    <label for="handler">送信後案件担当者</label>
+                    <input type="text" id="handler" autocomplete="off">
+                </div>
+                <br>
+                <button id="reset-output">入力テキストをリセット</button>
                 <label for="input-text">本文</label>
                 <textarea id="input-text" rows="5" cols="50" placeholder="ここにテキストを入力してください"></textarea>
                 <p><span>SMS文字数制限: </span><span id="counter">0 / 670</span></p>
                 <br>
-                <input type="radio" id="tokyo-building-regular" name="tokyo-building" value="東京建物（無印）">
-                <label for="tokyo-building-regular">東京建物（無印）</label>
-                <input type="radio" id="tokyo-building-rm" name="tokyo-building" value="東京建物（RM）">
-                <label for="tokyo-building-rm">東京建物（RM)</label>
+            　  <div class="container togglable">
+                    <label>管理会社：</label>
+                    <input type="radio" id="tokyo-building-regular" name="tokyo-building" value="東京建物（無印）">
+                    <label for="tokyo-building-regular">東京建物（無印）</label>
+                    <input type="radio" id="tokyo-building-rm" name="tokyo-building" value="東京建物（RM）">
+                    <label for="tokyo-building-rm">東京建物（RM)</label>
+                    <br>
+                </div>
                 <br>
                 <label for="case-id">案件ID</label>
                 <input type="text" id="case-id">
@@ -89,9 +119,6 @@
                 <label for="status-oc-completed">OC完了</label>
                 <input type="radio" id="status-vendor" name="sendstatus" value="業者対応中">
                 <label for="status-vendor">業者対応中</label>
-                <br>
-                <label for="handler">送信後案件担当者</label>
-                <input type="text" id="handler" autocomplete="off">
                 <br>
                 <button id="copy-output">出力テキストをコピー</button>
                 <h2>出力テキスト:</h2>
